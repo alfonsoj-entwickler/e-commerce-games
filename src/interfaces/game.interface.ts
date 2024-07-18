@@ -9,8 +9,9 @@ export interface Game {
     tags: string[];
     title: string;
     type: ValidTypes;
-    gender: 'men'|'women'|'kid'|'unisex'
+    hardware: 'xbox'|'playstation'|'nintendo'|'all'
 }
 
-type ValidSizes = 'XS'|'S'|'M'|'L'|'XL'|'XXL'|'XXXL';
-type ValidTypes = 'shirts'|'pants'|'hoodies'|'hats';
+export type ValidSizes = 'XS'|'S'|'M'|'L'|'XL'|'XXL'|'XXXL';
+export type ValidTypes = 'shirts'|'pants'|'hoodies'|'hats';
+export type ValidHardware = 'XBOX'|'X360'|'XONE'|'XSeries'|'PS2'|'PS3'|'PS4'|'PS5'|'WII'|'WIIU'|'SWITCH';
