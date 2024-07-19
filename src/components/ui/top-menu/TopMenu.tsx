@@ -23,7 +23,7 @@ export const TopMenu = () => {
       <div className="hidden sm:flex gap-2">
         <Link
           className="p-2 rounded-md transition-all hover:bg-gray-200"
-          href="/category/ps"
+          href="/category/playstation"
         >
           PS
         </Link>
