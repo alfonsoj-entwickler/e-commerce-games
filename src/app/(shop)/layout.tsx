@@ -1,4 +1,4 @@
-import { Sidebar, TopMenu } from "@/components";
+import { Footer, Sidebar, TopMenu } from "@/components";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -16,6 +16,7 @@ export default function ShopLayout({
       <TopMenu />
       <Sidebar />
       <div className="px-0 sm:px-5">{children}</div>
+      <Footer />
     </main>
   );
 }
