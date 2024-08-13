@@ -24,6 +24,7 @@ enum Size {
 }
 
 enum Hardware {
+  nintendo
   switch
   xbox
   playstation
@@ -38,7 +39,7 @@ model Category {
 
 model Game {
   id          String      @id @default(uuid())
-  titlte      String
+  title      String
   description String
   inStock     Int
   price       Float       @default(0)
