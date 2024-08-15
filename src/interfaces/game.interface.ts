@@ -1,5 +1,5 @@
 export interface Game {
-    //id: string;
+    id: string;
     description: string;
     images: string[];
     inStock: number;
@@ -8,7 +8,7 @@ export interface Game {
     slug: string;
     tags: string[];
     title: string;
-    type: ValidTypes;
+    // type: ValidTypes;
     hardware: 'xbox'|'playstation'|'nintendo'|'all'
 }
 
