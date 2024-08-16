@@ -1,15 +1,26 @@
+import { redirect } from "next/navigation";
 import { GameGrid, Title } from "@/components";
-import { initialData } from "@/seed/seed";
+import { getPagintionGameWithImages } from "@/actions";
 
-const games = initialData.products;
 
-export default function Shop() {
+interface Props {
+  searchParams: {
+    page?: string;
+  };
+}
+
+export default async function Shop({ searchParams }: Props) {
+  const { page } = searchParams;
+  const { games } = await getPagintionGameWithImages({ page: Number(page) });
+
+  if (games.length === 0) {
+    redirect("/");
+  }
+
   return (
     <>
       <Title title="Shop" subtitle="All games" className="mb-2" />
-      <GameGrid 
-        games={games}
-      />
+      <GameGrid games={games} />
     </>
   );
 }
