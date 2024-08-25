@@ -2,7 +2,10 @@ import { Footer, Sidebar, TopMenu } from "@/components";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Shop Games",
+  title: {
+    template: "%s - EGames | Shop",
+    default: "Home - EGames | Shop",
+  },
   description: "Shopping games",
 };
 
