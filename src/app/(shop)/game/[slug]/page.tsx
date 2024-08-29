@@ -1,12 +1,12 @@
-import {
-  GameMobileSlideShow,
-  GameSlideShow,
-  QuantitySelector,
-  SizeSelector,
-} from "@/components";
+export const revalidate = 604800;
+
+import { getGameBySlug } from "@/actions/game/get-game-by-slug";
+import { GameMobileSlideShow, GameSlideShow, StockLabel } from "@/components";
 import { titleFont } from "@/config/fonts";
-import { initialData } from "@/seed/seed";
 import { notFound } from "next/navigation";
+
+import type { Metadata, ResolvingMetadata } from "next";
+import { AddToCart } from "./ui/AddToCart";
 
 interface Props {
   params: {
@@ -14,9 +14,28 @@ interface Props {
   };
 }
 
-export default function Game({ params }: Props) {
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const id = params.slug;
+
+  const game = await getGameBySlug(id);
+
+  return {
+    title: game?.title ?? "Product not found",
+    description: game?.description ?? "",
+    openGraph: {
+      title: game?.title ?? "Product not found",
+      description: game?.description ?? "",
+      images: [`/products/${game?.images[1]}`],
+    },
+  };
+}
+
+export default async function Game({ params }: Props) {
   const { slug } = params;
-  const game = initialData.products.find((game) => game.slug === slug);
+  const game = await getGameBySlug(slug);
 
   if (!game) {
     notFound();
@@ -29,21 +48,21 @@ export default function Game({ params }: Props) {
           images={game.images}
           classname="sm:hidden"
         />
-        <GameSlideShow title={game.title} images={game.images} classname="hidden sm:block"/>
+        <GameSlideShow
+          title={game.title}
+          images={game.images}
+          classname="hidden sm:block"
+        />
       </div>
       <div className="col-span-1 px-5">
+        <StockLabel slug={slug} />
         <h1 className={`${titleFont.className} antialiased font-bold text-xl`}>
           {game.title}
         </h1>
         <p className="text-lg mb-5">{game.price}€</p>
-        <SizeSelector
-          selectedSize={game.sizes[0]}
-          availableSizes={game.sizes}
-        />
-        <QuantitySelector quantity={2} />
-        <button type="button" className="btn-primary my-5">
-          Add in cart
-        </button>
+
+        <AddToCart game={game} />
+
         <h3 className="font-bold text-sm">Description</h3>
         <p className="font-light">{game.description}</p>
       </div>
