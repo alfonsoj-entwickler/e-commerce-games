@@ -1,3 +1,5 @@
+import bcryptjs from 'bcryptjs';
+
 interface SeedProduct {
     description: string;
     images: string[];
@@ -10,12 +12,21 @@ interface SeedProduct {
     type: ValidTypes;
     hardware: ValidPlataforms
 }
+
+interface SeedUser {
+    email: string;
+    password: string;
+    name: string;
+    role: 'admin' | 'user';
+}
+
 export type ValidPlataforms = 'xbox'|'playstation'|'nintendo'|'all';
 export type ValidSizes = 'XS'|'S'|'M'|'L'|'XL'|'XXL'|'XXXL';
 export type ValidTypes = 'shirts'|'pants'|'hoodies'|'hats';
 export type ValidHardwares = 'XBOX'|'X360'|'XONE'|'XSeries'|'PS2'|'PS3'|'PS4'|'PS5'|'WII'|'WIIU'|'SWITCH';
 
 interface SeedData {
+    users: SeedUser[];
     categories: string[],
     products: SeedProduct[],
 }
@@ -24,6 +35,28 @@ interface SeedData {
 
 
 export const initialData: SeedData = {
+    users: [
+        {
+          email: 'fernando@google.com',
+          name: 'Fernando Herrera',
+          password: bcryptjs.hashSync('123456'),
+          role: 'admin'
+        },
+        {
+          email: 'melissa@google.com',
+          name: 'Melissa Flores',
+          password: bcryptjs.hashSync('123456'),
+          role: 'user'
+        },
+        {
+            email: 'muller.torr@google.com',
+            name: 'Muller Torr',
+            password: bcryptjs.hashSync('123456'),
+            role: 'user'
+          },
+    
+    ],
+    
     categories: [
         'Shirts', 'Pants', 'Hoodies', 'Hats'
     ],
