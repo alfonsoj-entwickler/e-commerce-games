@@ -1,8 +1,8 @@
 "use client";
 
 import { QuantitySelector, SizeSelector } from "@/components";
-import { ValidSizes } from "@/interfaces";
-import { Game } from "@prisma/client";
+import type { CartGame, Game, ValidSizes } from "@/interfaces";
+import { useCartStore } from "@/store";
 import { useState } from "react";
 
 interface Props {
@@ -10,13 +10,31 @@ interface Props {
 }
 
 export const AddToCart = ({ game }: Props) => {
+  const addGameToCart = useCartStore((state) => state.addGameToCart);
   const [size, setSize] = useState<ValidSizes | undefined>();
   const [quantity, setQuantity] = useState<number>(1);
   const [errorPosted, setErrorPosted] = useState<boolean>(false);
 
   const addToCart = () => {
+    console.log(game);
     setErrorPosted(true);
-    console.log(size, quantity, game);
+    if (!size) return;
+
+    const cartGame: CartGame = {
+      id: game.id,
+      slug: game.slug,
+      title: game.slug,
+      price: game.price,
+      quantity: quantity,
+      size: size,
+      image: game.images[0],
+    };
+    addGameToCart(cartGame);
+    setErrorPosted(false);
+    setQuantity(1);
+    setSize(undefined);
+
+    //console.log({ size, quantity, game });
   };
 
   return (
@@ -33,7 +51,11 @@ export const AddToCart = ({ game }: Props) => {
         onSizeChanged={setSize}
       />
       <QuantitySelector quantity={quantity} onQuantityChanged={setQuantity} />
-      <button type="button" className="btn-primary my-5" onClick={addToCart}>
+      <button
+        type="button"
+        className="btn-primary my-5"
+        onClick={(e) => addToCart()}
+      >
         Add in cart
       </button>
     </>
