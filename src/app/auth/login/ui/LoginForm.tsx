@@ -1,11 +1,19 @@
 "use client";
-import { useFormState } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 import { authenticate } from "@/actions/";
+import { IoInformationCircleOutline } from "react-icons/io5";
+import clsx from "clsx";
+import { useEffect } from "react";
 
 export const LoginForm = () => {
   const [state, dispatch] = useFormState(authenticate, undefined);
 
-  console.log("LoginForm state --> ", state);
+  useEffect(() => {
+    if (state === "Success") {
+      //router.replace("/")
+      window.location.replace("/");
+    }
+  }, [state]);
 
   return (
     <form action={dispatch}>
@@ -22,11 +30,31 @@ export const LoginForm = () => {
         type="password"
         name="password"
       />
+      {state === "CredentialsSignin" && (
+        <div className="flex h-8 mb-2 justify-center items-center space-x-1 text-red-600">
+          <IoInformationCircleOutline className="h-5 w-5" />
+          <p className="text-sm">Credentials are false</p>
+        </div>
+      )}
       <div className="text-center">
-        <button type="submit" className="btn-primary">
-          Enter
-        </button>
+        <LoginButton />
       </div>
     </form>
   );
 };
+
+function LoginButton() {
+  const { pending } = useFormStatus();
+  return (
+    <button
+      type="submit"
+      className={clsx({
+        "btn-primary": !pending,
+        "btn-disabled": pending,
+      })}
+      disabled={pending}
+    >
+      Enter
+    </button>
+  );
+}
