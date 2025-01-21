@@ -4,6 +4,9 @@ import { countries } from "./seed-countries";
 
 async function main() {
   // delete old db
+  await prisma.userAddress.deleteMany();
+  await prisma.orderItem.deleteMany();
+  await prisma.order.deleteMany();
   await prisma.user.deleteMany();
   await prisma.gameImage.deleteMany();
   await prisma.game.deleteMany();
@@ -13,7 +16,7 @@ async function main() {
   const { categories, products, users } = initialData;
 
   // users
-  await prisma.user.createMany({
+  await prisma.user.createMany({ 
     data: users
   });
 
