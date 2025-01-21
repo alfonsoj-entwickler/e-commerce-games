@@ -14,6 +14,7 @@ interface State {
     addGameToCart: (game: CartGame) => void;
     removeGameInCart: (game: CartGame) => void;
     updateGameQuantity: (game: CartGame, quantity: number) => void;
+    clearCart: () => void;
 }
 
 export const useCartStore = create<State>()(
@@ -73,7 +74,12 @@ export const useCartStore = create<State>()(
                 })
     
                 set({ cart: updateCardGames });
-            }
+            },
+            clearCart: () => {
+                set({
+                    cart: []
+                })
+            },
         }),
         {
             name: "shopping-cart",
