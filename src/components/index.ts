@@ -11,4 +11,5 @@ export * from "./ui/top-menu/TopMenu";
 export * from "./ui/not-found/PageNotFound";
 export * from "./ui/title/Title";
 export * from "./ui/pagination/Pagination";
-export * from "./provider/Provider";
+export * from "./providers/Providers";
+export * from "./paypal/PayPalButton";
