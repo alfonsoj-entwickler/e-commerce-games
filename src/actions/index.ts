@@ -12,4 +12,7 @@ export * from './order/place-order';
 export * from './order/get-order-by-id';
 export * from './order/get-orders-by-user';
 export * from './order/set-transaction-id';
+export * from './order/get-paginate-orders';
+export * from './users/get-paginate-users';
+export * from './users/change-user-role';
 export * from './payments/paypal-payment';
