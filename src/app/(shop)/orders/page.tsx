@@ -11,7 +11,6 @@ export default async function Orders() {
   if (!ok) {
     redirect("/auth/login");
   }
-  console.log("orders", orders);
   return (
     <>
       <Title title="Orders" />
