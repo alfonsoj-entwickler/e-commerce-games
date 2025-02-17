@@ -118,7 +118,26 @@ export default function Order({ params }: Props) {
             </div>
 
             <div className="mt-5 mb-2 w-full">
-              <PayPalButton amount={order.products?.total} orderId={order.id} />
+              {!order.products?.isPaid ? (
+                <PayPalButton
+                  amount={order.products?.total}
+                  orderId={order.id}
+                />
+              ) : (
+                <div
+                  className={clsx(
+                    "flex items-center rounded-lg py-2 px-3.5 text-xs font-bold text-white mb-5",
+                    {
+                      "bg-red-500": !order.products?.isPaid,
+                      "bg-green-700": order.products?.isPaid,
+                    }
+                  )}
+                >
+                  <IoCardOutline size={30} />
+
+                  <span className="mx-2">Payed</span>
+                </div>
+              )}
             </div>
           </div>
         </div>
