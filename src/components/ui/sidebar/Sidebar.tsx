@@ -77,7 +77,7 @@ export const Sidebar = () => {
             </Link>
           </>
         )}
-        {isAuthenticated ? (
+        {isAuthenticated || isAdmin ? (
           <button
             type="button"
             className="flex items-center w-full mt-10 p-2 hover:bg-gray-100 rounded transition-all"
@@ -102,26 +102,28 @@ export const Sidebar = () => {
           <>
             <div className="w-full h-px bg-gray-200 my-10" />
             <Link
-              href="/"
+              href="/admin/games"
               className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+              onClick={() => closeMenu()}
             >
               <IoGameControllerOutline size={30} />
               <span className="ml-3 text-xl">Games</span>
             </Link>
             <Link
-              href="/orders"
+              href="/admin/orders"
               className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
               onClick={() => closeMenu()}
             >
               <IoTicketOutline size={30} />
-              <span className="ml-3 text-xl">Orders</span>
+              <span className="ml-3 text-xl">Admin orders</span>
             </Link>
             <Link
-              href="/"
+              href="/admin/users"
               className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+              onClick={() => closeMenu()}
             >
               <IoPeopleOutline size={30} />
-              <span className="ml-3 text-xl">Users</span>
+              <span className="ml-3 text-xl">Admin Users</span>
             </Link>
           </>
         )}
