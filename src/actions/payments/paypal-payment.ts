@@ -1,32 +1,50 @@
 'use server';
 
-import prisma from "@/lib/prisma";
+import prisma from '@/lib/prisma';
+import { PayPalOrderStatusResponse } from '@/interfaces';
+import { revalidatePath } from 'next/cache'; 
 
 export const paypalCheckPayment = async (transactionId: string) => {
-    const authToken = await getPayPalBearerToken();
-    try {
-        const orderUpdate = prisma.order.update({
-            where: {
-                transactionId: transactionId
-            },
-            data: {
-                isPaid: true
-            }
-        })
-        if (!orderUpdate) {
-            return {
-                ok: false
-            } 
-        }
-        return {
-            ok: true
-        }
-    } catch (error) {
-        return {
-            ok: false,
-            message: `Error - paypalPayment- ${error}`
-        }
+  const authToken = await getPayPalBearerToken();
+  if (!authToken) {
+    return {
+      ok: false,
+      message: 'not verified token'
     }
+  }
+
+  const resp = await verifyPayPalPayment(transactionId, authToken);
+  if (!resp) {
+    return {
+      ok: false,
+      message: 'not verified paypal'
+    }
+  }
+  const { status, purchase_units } = resp;
+  const { invoice_id: orderId } = purchase_units[0];
+
+  try {
+    const orderUpdate = await prisma.order.update({
+      where: {
+        id: orderId
+      },
+      data: {
+        isPaid: true,
+        paidAt: new Date()
+      }
+    })
+
+    revalidatePath(`/oders/${orderId}`);
+    return {
+      ok: true,
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      ok: false,
+      message: '500 - paypal not working'
+    }
+  }
 
 }
 
