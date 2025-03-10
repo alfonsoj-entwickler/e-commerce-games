@@ -6,11 +6,7 @@ export const getGameBySlug = async ( slug:string) => {
     try {
         const game = await prisma.game.findFirst({
             include: {
-                GameImage: {
-                    select: {
-                        url: true
-                    }
-                }
+                GameImage: true,
             },
             where: {
                 slug: slug,
