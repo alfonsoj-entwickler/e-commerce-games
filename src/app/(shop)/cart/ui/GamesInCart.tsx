@@ -1,7 +1,6 @@
 "use client";
 
-import Image from "next/image";
-import { QuantitySelector } from "@/components";
+import { GameImage, QuantitySelector } from "@/components";
 import { useCartStore } from "@/store";
 import Link from "next/link";
 
@@ -17,8 +16,8 @@ export const GamesInCart = () => {
           className="flex mb-5 p-4 bg-white rounded-md shadow-md overflow-hidden"
         >
           <Link className="group overflow-hidden" href={`/game/${game.slug}`}>
-            <Image
-              src={`/products/${game.image}`}
+            <GameImage
+              src={game.image}
               width={120}
               height={120}
               alt={game.title}

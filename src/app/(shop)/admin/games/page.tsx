@@ -1,10 +1,12 @@
 import { getPaginateOrders } from "@/actions";
-import { Pagination, Title } from "@/components";
+import { GameImage, Pagination, Title } from "@/components";
 
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { IoCardOutline, IoClipboardOutline } from "react-icons/io5";
 import { getPagintionGameWithImages } from "@/actions";
+import Image from "next/image";
+import { currencyFormat } from "@/utils";
 
 interface Props {
   searchParams: {
@@ -52,6 +54,12 @@ export default async function AdminGames({ searchParams }: Props) {
                 scope="col"
                 className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
               >
+                Hardware
+              </th>
+              <th
+                scope="col"
+                className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+              >
                 inStock
               </th>
             </tr>
@@ -63,13 +71,29 @@ export default async function AdminGames({ searchParams }: Props) {
                 className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100"
               >
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  {game.id.split("-").at(-1)}
+                  <Link href={`/game/${game.slug}`}>
+                    <GameImage
+                      width={80}
+                      height={80}
+                      src={game.GameImage[0]?.url}
+                      alt={`Image - ${game.description}`}
+                      className="w-20 h-20 object-cover rounded"
+                    />
+                  </Link>
                 </td>
                 <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  {game.title}
+                  <Link
+                    href={`/admin/game/${game.slug}`}
+                    className="hover:underline"
+                  >
+                    {game.title}
+                  </Link>
+                </td>
+                <td className="text-sm text-gray-900 font-bold px-6 py-4 whitespace-nowrap">
+                  {currencyFormat(game.price)}
                 </td>
                 <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  {game.price}€
+                  {game.hardware}
                 </td>
                 <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                   {game.inStock}
