@@ -22,6 +22,12 @@ export interface CartGame {
     image: string;
 }
 
+export interface GameImage {
+    id: number;
+    url: string;
+    gameId ?: string;
+}
+
 export type ValidSizes = 'XS'|'S'|'M'|'L'|'XL'|'XXL'|'XXXL';
 export type ValidTypes = 'shirts'|'pants'|'hoodies'|'hats';
 export type ValidHardware = 'XBOX'|'X360'|'XONE'|'XSeries'|'PS2'|'PS3'|'PS4'|'PS5'|'WII'|'WIIU'|'SWITCH';
