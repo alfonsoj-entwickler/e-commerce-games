@@ -8,7 +8,7 @@ import "swiper/css/free-mode";
 import "swiper/css/pagination";
 
 import "./slideshow.css";
-import Image from "next/image";
+import { GameImage } from "@/components/games/game-image/GameImage";
 
 interface Props {
   images: string[];
@@ -33,10 +33,10 @@ export const GameMobileSlideShow = ({ images, title, classname }: Props) => {
       >
         {images.map((image) => (
           <SwiperSlide key={`mobile-slideshow-${image}`}>
-            <Image
+            <GameImage
               width={600}
               height={500}
-              src={`/products/${image}`}
+              src={image}
               alt={title}
               className="object-fill"
             />
