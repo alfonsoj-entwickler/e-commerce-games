@@ -1,3 +1,4 @@
+export * from './game/create-update-game';
 export * from './game/game-pagination';
 export * from './game/get-game-by-slug';
 export * from './game/get-stock-by-slug';
@@ -16,3 +17,4 @@ export * from './order/get-paginate-orders';
 export * from './users/get-paginate-users';
 export * from './users/change-user-role';
 export * from './payments/paypal-payment';
+export * from './category/get-categories';
