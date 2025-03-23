@@ -4,6 +4,7 @@ export * from "./game/slideshow/GameSlideShow";
 export * from "./game/slideshow/GameMobileSlideShow";
 export * from "./games/game-grid/GameGrid";
 export * from "./games/game-grid/GameGridItem";
+export * from "./games/game-image/GameImage";
 export * from "./game/stock-label/StockLabel";
 export * from "./ui/footer/Footer";
 export * from "./ui/sidebar/Sidebar";
